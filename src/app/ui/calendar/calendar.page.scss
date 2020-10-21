@@ -1,0 +1,69 @@
+.calendar{
+    height: 100%;
+    width: 100%;
+}
+
+.calendarTitle{
+    text-align: center;
+}
+
+.datetime-picker{
+    text-align: center;
+    --padding-start: 0px;
+}
+
+.calendar-header{
+    --ion-grid-columns: 7;
+    .calendar-month{
+        ion-col:nth-child(1),:nth-child(3){
+            margin-top: auto;
+            margin-bottom: auto;
+            text-align: center;
+        }
+    }
+}
+
+.calendar-body{
+    --ion-grid-columns: 7;
+}
+
+.calendar-day{
+    ion-col{
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.calendar-date{
+    ion-col{
+        text-align: center;
+        height: 100%;
+        width: 100%;
+
+    }
+    .dayBlock:focus {
+        background-color:red;
+    }
+}
+
+.lastMonthDays, .nextMonthDays, .thisMonthDays {
+    color: #999999;
+    .flow{
+        clear: both;
+        margin: 0 auto;
+        width: 14px;
+        .event-bullet {
+            margin: 1px 1px;
+            height: 5px;
+            width: 5px;
+            border-radius: 30px;
+            float: left;
+        }
+    }
+    .isSelected{
+        background-color: #A9A9B0;
+    }
+}
+
+//.thisMonthDays:focus, .nextMonthDays:focus, .lastMonthDays:focus { background-color : #A9A9B0; }
+.thisMonthDays { color: #1e2023; }

@@ -1,0 +1,159 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="!hasCondition">Transaction History</ion-title>
+
+    <!-- <ion-title *ngIf="hasCondition"> -->
+    <ion-datetime *ngIf="hasCondition" disabled="true" [value]="dateTitle"></ion-datetime>
+    <!-- </ion-title> -->
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-select [(ngModel)]="currentAccountID" (ionChange)="updateTransactions()"
+          okText="Okay" cancelText="Dismiss">
+          <ion-select-option *ngFor="let account of accounts" [value]="account.AccountID">{{account.AccountName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-select [(ngModel)]="currentTransactionTypeID" [value]="defaultType" (ionChange)="updateTransactions()"
+          okText="Okay" cancelText="Dismiss">
+          <ion-select-option [value]="allTransactionType">All Transactions</ion-select-option>
+          <ion-select-option *ngFor="let type of transactionType" [value]="type.TransactionTypeID">
+            {{type.TransactionTypeName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!hasCondition && transactions.length>0">
+    <ion-label>All Transactions</ion-label>
+
+    <ion-list *ngIf="showSkeletonText">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-virtual-scroll [items]="transactions" [headerFn]="separateMonth">
+
+      <ion-item-divider color="primary" *virtualHeader="let header">
+        <ion-label>{{header}}</ion-label>
+      </ion-item-divider>
+
+      <ion-item *virtualItem="let transaction" [routerLink]="['/menu/edit-transaction',transaction.TransactionID]" routerDirection="forward" tappable
+      detail>
+        <ion-label>
+          {{transaction.TransactionName}}
+        </ion-label>
+        <ion-note slot="end">
+          RM {{transaction.TransactionAmount | number:'0.2-2'}}
+        </ion-note>
+      </ion-item>
+    </ion-virtual-scroll>
+  </div>
+
+  <div *ngIf="hasCondition && transactions.length>0">
+    <ion-list>
+      <ion-item *ngFor="let transaction of transactions"
+        [routerLink]="['/menu/edit-transaction',transaction.TransactionID]" routerDirection="forward" tappable
+        detail>
+        <ion-label>
+          {{transaction.TransactionName}}
+        </ion-label>
+        <ion-note slot="end">
+          RM {{transaction.TransactionAmount | number:'0.2-2'}}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-label *ngIf="transactions.length <=0 && currentTransactionTypeID == 0 && showSkeletonText==false" padding>
+    There is no transaction for this day.
+  </ion-label>
+
+  <ion-label *ngIf="transactions.length <=0 && currentTransactionTypeID == 1 && showSkeletonText==false" padding>
+    There is no income for this day.
+  </ion-label>
+
+  <ion-label *ngIf="transactions.length <=0 && currentTransactionTypeID == 2 && showSkeletonText==false" padding>
+    There is no expense for this day.
+  </ion-label>
+
+  <ion-label *ngIf="transactions.length <=0 && currentTransactionTypeID == 3 && showSkeletonText==false" padding>
+    There is no transfer for this day.
+  </ion-label>
+
+</ion-content>

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Transaction</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input placeholder="Ammount" type="number" [(ngModel)]="TransactionAmount"></ion-input>
+
+
+  <ion-input placeholder="Description" [(ngModel)]="TransactionName"></ion-input>
+
+  <ion-segment color="primary" [(ngModel)]="TransactionTypeID">
+    <ion-segment-button value="1" checked>
+      <ion-icon name="add"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-icon name="remove"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="3">
+      <ion-icon name="swap"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <ion-select [(ngModel)]="defaultAccount" [value]="defaultAccount" okText="Okay" cancelText="Dismiss">
+    <ion-select-option *ngFor="let account of accounts" [value]="account.AccountID">{{account.AccountName}}</ion-select-option>
+  </ion-select>
+
+  <ion-button fill="outline">Cancel</ion-button>
+  <ion-button fill="outline" (click)="insertTransaction()">Save</ion-button>
+</ion-content>

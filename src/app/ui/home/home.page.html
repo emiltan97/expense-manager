@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home Page</ion-title>
+    <ion-icon slot="end" size="large" name="calendar" [routerLink]="'/menu/calendar'" routerDirection="forward">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-select [(ngModel)]="index" (ionChange)="onChange()"  placeholder="Select an account">
+    <ion-select-option *ngFor="let account of accounts" [value]="account.AccountID">{{account.AccountName}}</ion-select-option>
+  </ion-select>
+  <ion-card class="card" id="card-balance" (click)="navigateToTransactionHistory()">
+    <ion-card-header>
+      <ion-card-title class="cardTitle">Current Balance</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="cardContent">
+      <div *ngIf="hasAccount; else noAccountScenario">
+        <!--{{accounts[index-1].CurrentBalance}}-->
+        {{currentAccountCurrentBalance}}
+        <!--{{setCurrentAccountCurrentBalance()}}-->
+        <!--{{setCurrentAccountLastTransaction()}}-->
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="card" id="card-last-transaction">
+    <ion-card-header>
+      <ion-card-title class="cardTitle">Last Transaction</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="cardContent">
+      <div *ngIf="hasAccount; else noAccountScenario">
+          <div *ngIf="hasTransaction; else noTransactionScenario" (click)="editLastTransaction()">
+              {{lastTransaction}}
+          </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="card" id="card-daily-expenses" (click)="navigateToDailyTransactions()">
+    <ion-card-header>
+      <ion-card-title class="cardTitle">Daily Expenses</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="cardContent">
+      <div *ngIf="hasAccount; else noAccountScenario">
+        {{currentAccountDailyExpenses}}
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-fab id="fab-add" vertical="bottom" horizontal="end" >
+  <div *ngIf="hasAccount; then withAccountFab else noAccountFab"></div>
+</ion-fab>
+<!--NG TEMPLATES STARTS HERE-->
+<ng-template #noAccountScenario>
+  <i>There is no account added yet.</i>
+</ng-template>
+<ng-template #noAccountFab>
+  <ion-fab-button [routerLink]="'/menu/add-account'" routerDirection="forward">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ng-template>
+<ng-template #withAccountFab>
+  <ion-fab-button [routerLink]="'/menu/add-transaction/' + index" routerDirection="forward">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ng-template>
+<ng-template #noTransactionScenario>
+    <i>There is no transaction on this account yet.</i>
+</ng-template>
+<!--NG TEMPLATE ENDS HERE-->

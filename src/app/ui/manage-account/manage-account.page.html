@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Manage Account</ion-title>
+
+    <ion-icon slot="end" size="large" name="calendar" [routerLink]="'/menu/calendar'" routerDirection="forward">
+    </ion-icon>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let account of accounts" lines="none">
+    <ion-item>
+      <ion-card class="card">
+        <ion-card-content>
+          <ion-item>
+            <ion-label class="card-title">
+              {{account.AccountName}}
+            </ion-label>
+              <ion-icon (click)="updateAccount(account.AccountID, account)" name="create"> </ion-icon>
+              <ion-icon slot="end" name="trash" okText="Confirm" cancelText="Cancel" (click)="deleteAccount(account.AccountID)"></ion-icon>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-fab id="fab-add" vertical="bottom" horizontal="end">
+  <ion-fab-button [routerLink]="'/menu/add-account'">
+      <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

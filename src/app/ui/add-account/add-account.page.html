@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-input placeholder="Account Title" [(ngModel)]="accountName"></ion-input>
+
+
+  <ion-input placeholder="Account Start Balance" type="number" [(ngModel)]="startingBalance"></ion-input>
+
+
+  <ion-select placeholder="Select the type of account" okText="Okay" cancelText="Dismiss" [(ngModel)]="accountTypeID">
+    <ion-select-option value="1">Bank</ion-select-option>
+    <ion-select-option value="2">Cash</ion-select-option>
+  </ion-select>
+
+  <ion-button fill="outline">Cancel</ion-button>
+  <ion-button fill="outline" (click)="addAccount()">Save</ion-button>
+
+
+</ion-content>
